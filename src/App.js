@@ -1,23 +1,96 @@
-import logo from './logo.svg';
+import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
+import NameEntry from './components/NameEntry';
+import AgeCounter from './components/AgeCounter';
+import GiftPages from './components/GiftPages';
+
+// Import songs
+import song1 from './assets/music/song1.mp3';
+import song2 from './assets/music/song2.mp3';
+
+const playlist = [song1, song2];
 
 function App() {
+  const [step, setStep] = useState(1);
+  const [name, setName] = useState('');
+
+  // --- MUSIC PLAYER LOGIC ---
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentSongIndex, setCurrentSongIndex] = useState(0);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (step === 3 && audio && !audio.src.includes(playlist[currentSongIndex])) {
+        audio.src = playlist[currentSongIndex];
+        audio.load();
+        audio.play().then(() => setIsPlaying(true)).catch(e => console.log("Audio play failed:", e));
+    }
+  }, [step, currentSongIndex]);
+
+  const playNextSong = () => {
+    setCurrentSongIndex(prevIndex => (prevIndex + 1) % playlist.length);
+  };
+
+  const handlePlayPause = () => {
+    if (audioRef.current.paused) {
+      audioRef.current.play().then(() => setIsPlaying(true));
+    } else {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
+  
+  // --- NEW FUNCTIONS TO PASS TO CHILD COMPONENT ---
+  const pauseMusic = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const resumeMusic = () => {
+    // Only resume if the user hadn't manually paused it before watching the video.
+    // A more complex state would be needed to track this, for now we just play.
+    audioRef.current.play().then(() => setIsPlaying(true));
+  };
+  // --- END OF NEW FUNCTIONS ---
+
+  const handleNameSubmit = (enteredName) => {
+    setName(enteredName);
+    setStep(2);
+  };
+  
+  const handleAgeComplete = () => setStep(3);
+  const handleBack = () => { if (step > 1) setStep(step - 1); };
+  const handleRestart = () => setStep(3);
+
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return <NameEntry onNameSubmit={handleNameSubmit} />;
+      case 2:
+        return <AgeCounter name={name} onComplete={handleAgeComplete} onBack={handleBack} />;
+      case 3:
+        return <GiftPages onBack={handleBack} pauseMusic={pauseMusic} resumeMusic={resumeMusic} />;
+      default:
+        return <NameEntry onNameSubmit={handleNameSubmit} />;
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       {step === 3 && (
+        <div className="music-player">
+          <audio ref={audioRef} src={playlist[currentSongIndex]} onEnded={playNextSong} />
+          <button onClick={handlePlayPause}>{isPlaying ? 'Pause' : 'Play'}</button>
+          <button onClick={playNextSong}>Next Song</button>
+        </div>
+      )}
+      
+      <div className="container">
+        {renderStep()}
+      </div>
     </div>
   );
 }
