@@ -510,7 +510,15 @@ button:hover {
   font-weight: 500;
   
 }
+.head{
+  text-align: center;
+  color: #111315;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style:italic;
+  font-size:1.5rem;
+  font-weight: 300;
 
+}
 .thumbnail { 
   width: 100px; 
   height: 100px; 

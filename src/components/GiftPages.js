@@ -214,7 +214,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
 </p>
 
 <p className='final'>
-  <strong className='h1'>The Day We First Met 🎥</strong><br />
+  <strong className='head'>The Day We First Met 🎥</strong><br />
   3rd of May , 2025 :- 
   Well chat roullete me milna dono ke liye hi kaafi unexpected tha and then same gaon se niklna or hi jyaada unexpected . 
   It could have been just another ordinary day for both of us but it didn't happen.
@@ -222,7 +222,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
 </p>
 
 <p className='final'>
-  <strong className='h1'>The First Conversations 💬</strong><br />
+  <strong className='head'>The First Conversations 💬</strong><br />
   From that day, we started talking on Instagram, sharing stories, laughter, and little bits of our lives. 
   Within days, we exchanged Snapchat and phone numbers, 
   and I began to realize how much I looked forward to our conversations. 
@@ -230,7 +230,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
 </p>
 
 <p className='final'>
-  <strong className='h1'>Misunderstandings and Challenges ⚡</strong><br />
+  <strong className='head'>Misunderstandings and Challenges ⚡</strong><br />
   Not everything was smooth. At one point, my friend said something completely nonsensical —
   that I was talking to you only because you reminded me of my ex.
   Well to be honest that was completely bullshit. 
@@ -241,7 +241,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
 </p>
 
 <p className='final'>
-  <strong className='h1'>Shared Memories 🌸</strong><br />
+  <strong className='head'>Shared Memories 🌸</strong><br />
   Despite all the misunderstanding in the beginning and then later proposal things, 
   we shared moments that became meaningful to me: like long calls about childhood and school, funny snaps, 
   and stories that made me smile every day. 
@@ -249,7 +249,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
 </p>
 
 <p className='final'>
-  <strong className='h1'>Closure and Apologies ✉️</strong><br />
+  <strong className='head'>Closure and Apologies ✉️</strong><br />
   After a period of silence and confusion, 
   I once wrote a closure message to express my feelings honestly
   acknowledging that I still liked you and that I respected whatever decision you had made.
@@ -265,7 +265,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
 </p>
 
 <p className='final'>
-  <strong className='h1'>The Birthday Note & Website 🎂</strong><br />
+  <strong className='head'>The Birthday Note & Website 🎂</strong><br />
   As I already said that Website is not created as a compensation.
   I made this website as a small tribute to our connection. 
   It's not meant to pressure you or ask for anything. 
@@ -275,7 +275,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
 </p>
 
 <p className='final'>
-  <strong className='h1'>A Door Always Open </strong><br />
+  <strong className='head'>A Door Always Open </strong><br />
   Well when we started talking nobody of us had thought that in the next 3-4 months our ways will be separated  
   and I respect your space and choices completely. 
   I sincerely apologize for disrespecting for your space for the the first and the last time.
@@ -286,7 +286,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
 </p>
 
 <p className='final'>
-  <strong className='h1'>Untill Then :-  </strong><br />
+  <strong className='head'>Untill Then :-  </strong><br />
   Until then, I wish you happiness, peace, and everything your heart quietly hopes for.
    Even if we never talk again, I will always carry the memories we created, the lessons I learned, 
    and the connection that once made my days better.
