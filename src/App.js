@@ -19,14 +19,23 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
 
+  // This single useEffect now handles all music logic reliably.
   useEffect(() => {
     const audio = audioRef.current;
-    if (step === 3 && audio && !audio.src.includes(playlist[currentSongIndex])) {
+    if (step === 3 && audio) {
+      // If the audio source isn't the correct one, update it.
+      if (!audio.src.includes(playlist[currentSongIndex])) {
         audio.src = playlist[currentSongIndex];
         audio.load();
-        audio.play().then(() => setIsPlaying(true)).catch(e => console.log("Audio play failed:", e));
+      }
+      // Play the audio.
+      audio.play().then(() => setIsPlaying(true)).catch(e => console.log("Audio play failed:", e));
+    } else if (step < 3 && audio) {
+      // Pause the audio if we leave the gift pages.
+      audio.pause();
+      setIsPlaying(false);
     }
-  }, [step, currentSongIndex]);
+  }, [step, currentSongIndex]); // This logic runs only when the step or song changes.
 
   const playNextSong = () => {
     setCurrentSongIndex(prevIndex => (prevIndex + 1) % playlist.length);
@@ -41,7 +50,6 @@ function App() {
     }
   };
   
-  // --- NEW FUNCTIONS TO PASS TO CHILD COMPONENT ---
   const pauseMusic = () => {
     if (isPlaying) {
       audioRef.current.pause();
@@ -50,11 +58,12 @@ function App() {
   };
 
   const resumeMusic = () => {
-    // Only resume if the user hadn't manually paused it before watching the video.
-    // A more complex state would be needed to track this, for now we just play.
-    audioRef.current.play().then(() => setIsPlaying(true));
+    // Only resume playing if we are on the gift pages.
+    if (step === 3) {
+      audioRef.current.play().then(() => setIsPlaying(true));
+    }
   };
-  // --- END OF NEW FUNCTIONS ---
+  // --- END OF MUSIC PLAYER LOGIC ---
 
   const handleNameSubmit = (enteredName) => {
     setName(enteredName);
@@ -63,7 +72,6 @@ function App() {
   
   const handleAgeComplete = () => setStep(3);
   const handleBack = () => { if (step > 1) setStep(step - 1); };
-  const handleRestart = () => setStep(3);
 
   const renderStep = () => {
     switch (step) {
@@ -72,6 +80,7 @@ function App() {
       case 2:
         return <AgeCounter name={name} onComplete={handleAgeComplete} onBack={handleBack} />;
       case 3:
+        // The onRestart prop is no longer needed. GiftPages handles its own loop.
         return <GiftPages onBack={handleBack} pauseMusic={pauseMusic} resumeMusic={resumeMusic} />;
       default:
         return <NameEntry onNameSubmit={handleNameSubmit} />;
@@ -82,7 +91,7 @@ function App() {
     <div className="App">
        {step === 3 && (
         <div className="music-player">
-          <audio ref={audioRef} src={playlist[currentSongIndex]} onEnded={playNextSong} />
+          <audio ref={audioRef} onEnded={playNextSong} />
           <button onClick={handlePlayPause}>{isPlaying ? 'Pause' : 'Play'}</button>
           <button onClick={playNextSong}>Next Song</button>
         </div>

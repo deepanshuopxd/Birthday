@@ -40,16 +40,16 @@ const NameEntry = ({ onNameSubmit }) => {
   const [error, setError] = useState('');
 
   const handleNext = () => {
-    if (inputValue.trim().toLowerCase() === 'vasundhara') {
+    if (inputValue.trim().toLowerCase() === 'vasundhara' || inputValue.trim().toLowerCase() === 'vasu') {
       onNameSubmit(inputValue.trim());
       setError('');
     } else {
-      setError('Wrong name, please try again. ❤️');
+      setError("It's a wrong name . You don't know your name?");
     }
   };
 
   // This is our fourth and final checkpoint
-  console.log("4. NameEntry component is rendering");
+  // console.log("4. NameEntry component is rendering");
 
   return (
     <div className="centered-box">
@@ -60,7 +60,7 @@ const NameEntry = ({ onNameSubmit }) => {
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
-      <p className="caution-note">Please enter the correct first name only.</p>
+      <p className="caution-note">Please enter the correct first name only or enter your nick name.</p>
       {error && <p className="error-note">{error}</p>}
       <button onClick={handleNext}>Next</button>
     </div>

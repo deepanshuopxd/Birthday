@@ -12,8 +12,8 @@ const AgeCounter = ({ name, onComplete, onBack }) => {
   if (age === 19) {
     return (
       <div className="centered-box birthday-popup">
-        <h2>🎉 Happy Birthday, {name}! 🎉</h2>
-        <p>You have completed 19 years and are now stepping into your 20s. May this year bring you endless joy and success!</p>
+        <h2>Happy Birthday, {name}!🎉</h2>
+        <p>You have completed 19 years and are now stepping into your 20s. May this year bring you endless joy and success❤️!</p>
         <button onClick={onComplete}>Next</button>
       </div>
     );
@@ -21,10 +21,11 @@ const AgeCounter = ({ name, onComplete, onBack }) => {
 
   return (
     <div className="centered-box">
-      <h2>Hi, {name}!</h2>
+      
+      <h2 className='naam'>Hi, {name}!</h2>
       <p className="age-display">{age}</p>
       <button onClick={handleIncrease} disabled={age >= 19}>
-        Increase Age
+        Tap to increase your age 
       </button>
       <div className="mobile-nav-buttons">
          <button className="back-button" onClick={onBack}>Back</button>
