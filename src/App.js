@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Analytics } from "@vercel/analytics/react"
 import './App.css';
 import NameEntry from './components/NameEntry';
 import AgeCounter from './components/AgeCounter';
@@ -100,6 +101,7 @@ function App() {
       <div className="container">
         {renderStep()}
       </div>
+      <Analytics/>
     </div>
   );
 }

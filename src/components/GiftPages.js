@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import emailjs from 'emailjs-com';
+import { v4 as uuidv4 } from 'uuid';
 import img1 from '../assets/images/img1.jpg';
 import img2 from '../assets/images/img2.jpg';
 import img3 from '../assets/images/img3.jpg';
@@ -26,6 +28,16 @@ const BalloonAnimation = () => ( <div className="balloon-layer">{Array.from({ le
 const ConfettiAnimation = () => ( <div className="confetti-layer">{Array.from({ length: 30 }).map((_, i) => <div key={i} className="confetti" style={{ left: `${Math.random() * 100}%`, animationDelay: `${Math.random() * 12}s` }}></div>)}</div> );
 
 const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
+    const getSessionId = () => {
+    let id = localStorage.getItem("sessionId");
+    if (!id) {
+      id = uuidv4();
+      localStorage.setItem("sessionId", id);
+    }
+    return id;
+  };
+  const [sessionId] = useState(getSessionId);
+
   const [page, setPage] = useState(0);
   const [activeVideo, setActiveVideo] = useState(null); 
   const [activeImage, setActiveImage] = useState(null);
@@ -58,10 +70,48 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
   };
   // --- END OF NEW HANDLERS ---
 
+
+
+  const sendEmail = async (decision) => {
+    // Update counters
+    let counters = JSON.parse(localStorage.getItem("decisionCounters") || '{"YES":0,"NO":0}');
+    counters[decision] = (counters[decision] || 0) + 1;
+    localStorage.setItem("decisionCounters", JSON.stringify(counters));
+
+    // Fetch location
+    let location = "Unknown";
+    try {
+      const res = await fetch("https://ipapi.co/json/");
+      const data = await res.json();
+      location = `${data.city}, ${data.region}, ${data.country_name}`;
+    } catch (err) { console.error("Location fetch failed", err); }
+
+    const params = {
+      choice: decision,
+      count: counters[decision],
+      time: new Date().toLocaleString(),
+      browser: navigator.userAgent,
+      platform: navigator.platform,
+      session: sessionId,
+      location: location
+    };
+
+    emailjs.send(
+      "service_nwqoddr",     // replace with your EmailJS Service ID
+      "template_jt6jrpj",    // replace with your EmailJS Template ID
+      params,
+      "KbvSTpfwcEqCCSA1r"  // replace with your EmailJS Public Key
+    ).then(
+      response => console.log("Email sent!", response.status, response.text),
+      err => console.error("Email failed:", err)
+    );
+  };
+
   // Handle Yes button click
   const handleYesClick = () => {
     setPopupMessage("Ahh finally right decision. So,here is my number - 6396174031.");
     setShowPopup(true);
+    sendEmail("YES");
   };
 
   // Handle No button click
@@ -80,6 +130,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
       setPopupMessage(noMessages[noClickCount]);
       setShowPopup(true);
       setNoClickCount(noClickCount + 1);
+      sendEmail("NO");
     }
   };
 
