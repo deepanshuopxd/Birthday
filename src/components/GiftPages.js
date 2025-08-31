@@ -47,7 +47,7 @@ const envelopeContents = [
   { type: 'present', image: img19, text: 'I\'ll buy one for you. Not the girl but the kurti obviously😂 only if you\'ll explore the markets with me someday!' },
   { type: 'message', content: 'May every step you take lead you closer to your dreams and happiness ❤️.' },
   { type: 'message', content: 'Happy 20th Birthday! May this milestone year be your most wonderful one yet 💟!' },
-  { type: 'present', image: img20, text: 'This is not a gift for you but a treat for me which will be given by you🥳 if you\'ll wander with me in the strees of Banaras and make me try some best Banarasi Street Food! ' },
+  { type: 'present', image: img20, text: 'This is not a gift for you but a treat for me which will be given by you🥳 if you\'ll wander with me in the streets of Banaras and make me try some best Banarasi Street Food! ' },
   { type: 'message', content: 'Here\'s to new beginnings, fresh starts, and the beautiful journey ahead 💖!' },
   { type: 'message', content: 'Not a message but more like a wish for me:- ✨ “Maybe the old friendship once we had can find its way back again — not bound by the past, but renewed with laughter, trust, and the comfort we once shared. If life ever gives us another chance, I hope we can cherish it with more understanding, kindness, and joy than before. Wishing for a friendship that feels even stronger, softer, and brighter than it ever was.” ✨!' }
 ];
