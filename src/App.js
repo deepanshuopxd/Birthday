@@ -8,12 +8,33 @@ import GiftPages from './components/GiftPages';
 // Import songs
 import song1 from './assets/music/song1.mp3';
 import song2 from './assets/music/song2.mp3';
+import song3 from './assets/music/song1.mp3';
+import song4 from './assets/music/song2.mp3';
+import song5 from './assets/music/song1.mp3';
+import song6 from './assets/music/song2.mp3';
 
-const playlist = [song1, song2];
+const playlist = [song1, song2, song3, song4 ,song5, song6];
 
 function App() {
-  const [step, setStep] = useState(1);
-  const [name, setName] = useState('');
+  const [step, setStep] = useState(() => {
+    const savedStep = localStorage.getItem('appStep');
+    return savedStep ? parseInt(savedStep, 10) : 1;
+  });
+  const [name, setName] = useState(() => {
+    const savedName = localStorage.getItem('userName');
+    return savedName || '';
+  });
+
+  // Save step and name to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('appStep', step.toString());
+  }, [step]);
+
+  useEffect(() => {
+    if (name) {
+      localStorage.setItem('userName', name);
+    }
+  }, [name]);
 
   // --- MUSIC PLAYER LOGIC ---
   const audioRef = useRef(null);
@@ -72,7 +93,18 @@ function App() {
   };
   
   const handleAgeComplete = () => setStep(3);
-  const handleBack = () => { if (step > 1) setStep(step - 1); };
+  
+  const handleBack = () => { 
+    if (step > 1) {
+      const newStep = step - 1;
+      setStep(newStep);
+      // Clear name when going back to step 1
+      if (newStep === 1) {
+        setName('');
+        localStorage.removeItem('userName');
+      }
+    }
+  };
 
   const renderStep = () => {
     switch (step) {
@@ -81,7 +113,6 @@ function App() {
       case 2:
         return <AgeCounter name={name} onComplete={handleAgeComplete} onBack={handleBack} />;
       case 3:
-        // The onRestart prop is no longer needed. GiftPages handles its own loop.
         return <GiftPages onBack={handleBack} pauseMusic={pauseMusic} resumeMusic={resumeMusic} />;
       default:
         return <NameEntry onNameSubmit={handleNameSubmit} />;

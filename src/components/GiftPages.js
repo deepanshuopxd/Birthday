@@ -16,6 +16,11 @@ import img12 from '../assets/images/img12.jpg';
 import img13 from '../assets/images/img13.jpg';
 import img15 from '../assets/images/img15.png';
 import img14 from '../assets/images/img14.png';
+import img16 from '../assets/images/img16.jpg';
+import img17 from '../assets/images/img17.jpg';
+import img18 from '../assets/images/img18.jpg';
+import img19 from '../assets/images/img19.jpg';
+import img20 from '../assets/images/img20.jpg';
 import vid1 from '../assets/videos/vid1.mp4';
 import vid2 from '../assets/videos/vid2.mp4';
 import vid3 from '../assets/videos/vid3.mp4';
@@ -24,11 +29,35 @@ import vid4 from '../assets/videos/vid4.mp4';
 const galleryImages = [img2, img3, img4, img5, img6, img7, img8, img9, img10, img11,img15,img14];
 const galleryVideos = [vid2, vid3, vid4];
 
+const envelopeContents = [
+  { type: 'message', content: 'Your smile 😍 can light up the darkest day. Never stop being the amazing person you are ❤️!' },
+  { type: 'message', content: 'Every conversation with you made my day brighter. Thank you for being such a wonderful friend 💖.' },
+  { type: 'message', content: 'Your kindness and warmth are rare treasures in this world. Stay blessed always ❣️!' },
+  { type: 'message', content: 'I hope this new year of your life brings you endless joy and beautiful surprises 💗.' },
+  { type: 'message', content: 'You have this incredible ability to make others feel special. That\'s your superpower!' },
+  { type: 'present', image: img16, text: 'A virtual bouquet of your favorite (maybe) flowers!' },
+  { type: 'message', content: 'May your dreams take flight and your heart always stay young and hopeful ❤️.' },
+  { type: 'message', content: 'Your laughter is music to the soul. Keep spreading that beautiful energy 🤍!' },
+  { type: 'present', image: img17, text: 'Well this is just a virtual gift! But I\'ll give them as a present next time if we\'ll reconnect again😅!' },
+  { type: 'message', content: 'You deserve all the love and happiness this world has to offer ❤️‍🔥.' },
+  { type: 'message', content: 'Thank you for all the memories we created together. They mean the world to me 💟.' },
+  { type: 'present', image: img18, text: 'A peacock pendant for you! Although peacocks are very beautiful and mesmerizing but somehow your beauty and elegance resembles like a peacock🦚! ' },
+  { type: 'message', content: 'Your strength and resilience inspire everyone around you. Keep shining 💕!' },
+  { type: 'message', content: 'I hope your 20s are filled with adventures, love, and endless possibilities.' },
+  { type: 'present', image: img19, text: 'I\'ll buy one for you. Not the girl but the kurti obviously😂 only if you\'ll explore the markets with me someday!' },
+  { type: 'message', content: 'May every step you take lead you closer to your dreams and happiness ❤️.' },
+  { type: 'message', content: 'Not a message but more like a wish for me:- ✨ “Maybe the old friendship once we had can find its way back again — not bound by the past, but renewed with laughter, trust, and the comfort we once shared. If life ever gives us another chance, I hope we can cherish it with more understanding, kindness, and joy than before. Wishing for a friendship that feels even stronger, softer, and brighter than it ever was.” ✨ ' },
+  { type: 'present', image: img20, text: 'This is not a gift for you but a treat for me which will be given by you🥳 if you\'ll wander with me in the strees of Banaras and make me try some best Banarasi Street Food! ' },
+  { type: 'message', content: 'Here\'s to new beginnings, fresh starts, and the beautiful journey ahead 💖!' },
+  { type: 'message', content: 'Happy 20th Birthday! May this milestone year be your most wonderful one yet 💟!' }
+];
+
 const BalloonAnimation = () => ( <div className="balloon-layer">{Array.from({ length: 5 }).map((_, i) => <div key={i} className="balloon" style={{ left: `${Math.random() * 90}%` }}></div>)}</div> );
 const ConfettiAnimation = () => ( <div className="confetti-layer">{Array.from({ length: 30 }).map((_, i) => <div key={i} className="confetti" style={{ left: `${Math.random() * 100}%`, animationDelay: `${Math.random() * 12}s` }}></div>)}</div> );
+const FloatingHearts = () => ( <div className="hearts-layer">{Array.from({ length: 8 }).map((_, i) => <div key={i} className="floating-heart" style={{ left: `${Math.random() * 95}%`, animationDelay: `${Math.random() * 10}s` }}>💖</div>)}</div> );
 
 const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
-    const getSessionId = () => {
+  const getSessionId = () => {
     let id = localStorage.getItem("sessionId");
     if (!id) {
       id = uuidv4();
@@ -38,17 +67,54 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
   };
   const [sessionId] = useState(getSessionId);
 
-  const [page, setPage] = useState(0);
+const [page, setPage] = useState(() => {
+  const savedPage = localStorage.getItem('currentPage');
+  if (savedPage) {
+    const parsed = parseInt(savedPage, 10);
+    return parsed === 8 ? 0 : parsed; // Reset to start if last page
+  }
+  return 0;
+});
   const [activeVideo, setActiveVideo] = useState(null); 
   const [activeImage, setActiveImage] = useState(null);
-  const [noClickCount, setNoClickCount] = useState(0);
+  const [noClickCount, setNoClickCount] = useState(() => {
+    const savedCount = localStorage.getItem('noClickCount');
+    return savedCount ? parseInt(savedCount, 10) : 0;
+  });
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
+  const [showEnvelopes, setShowEnvelopes] = useState(() => {
+    const savedEnvelopes = localStorage.getItem('showEnvelopes');
+    return savedEnvelopes ? JSON.parse(savedEnvelopes) : false;
+  });
+  const [openedEnvelopes, setOpenedEnvelopes] = useState(() => {
+    const savedOpened = localStorage.getItem('openedEnvelopes');
+    return savedOpened ? JSON.parse(savedOpened) : [];
+  });
+  const [selectedEnvelope, setSelectedEnvelope] = useState(null);
 
   // Scroll to top whenever page changes
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [page]);
+
+  // Save page state to localStorage
+  useEffect(() => {
+    localStorage.setItem('currentPage', page.toString());
+  }, [page]);
+
+  // Save envelope game state to localStorage
+  useEffect(() => {
+    localStorage.setItem('noClickCount', noClickCount.toString());
+  }, [noClickCount]);
+
+  useEffect(() => {
+    localStorage.setItem('showEnvelopes', JSON.stringify(showEnvelopes));
+  }, [showEnvelopes]);
+
+  useEffect(() => {
+    localStorage.setItem('openedEnvelopes', JSON.stringify(openedEnvelopes));
+  }, [openedEnvelopes]);
 
   const handleBack = () => {
     if (page > 0) {
@@ -58,7 +124,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
     }
   };
 
-  // --- NEW VIDEO HANDLERS ---
+  // --- VIDEO HANDLERS ---
   const handleVideoPlay = (videoSrc) => {
     pauseMusic();
     setActiveVideo(videoSrc);
@@ -68,17 +134,31 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
     resumeMusic();
     setActiveVideo(null);
   };
-  // --- END OF NEW HANDLERS ---
 
+  // --- ENVELOPE HANDLERS ---
+  const handleEnvelopeIconClick = () => {
+    setShowEnvelopes(true);
+  };
 
+  const handleEnvelopeClick = (index) => {
+    setSelectedEnvelope(envelopeContents[index]);
+    setOpenedEnvelopes([...openedEnvelopes, index]);
+  };
+
+  const closeEnvelopePopup = () => {
+    setSelectedEnvelope(null);
+  };
+
+  const resetEnvelopes = () => {
+    setOpenedEnvelopes([]);
+    setShowEnvelopes(true);
+  };
 
   const sendEmail = async (decision) => {
-    // Update counters
     let counters = JSON.parse(localStorage.getItem("decisionCounters") || '{"YES":0,"NO":0}');
     counters[decision] = (counters[decision] || 0) + 1;
     localStorage.setItem("decisionCounters", JSON.stringify(counters));
 
-    // Fetch location
     let location = "Unknown";
     try {
       const res = await fetch("https://ipapi.co/json/");
@@ -97,24 +177,22 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
     };
 
     emailjs.send(
-      "service_nwqoddr",     // replace with your EmailJS Service ID
-      "template_jt6jrpj",    // replace with your EmailJS Template ID
+      "service_nwqoddr",
+      "template_jt6jrpj",
       params,
-      "KbvSTpfwcEqCCSA1r"  // replace with your EmailJS Public Key
+      "KbvSTpfwcEqCCSA1r"
     ).then(
       response => console.log("Email sent!", response.status, response.text),
       err => console.error("Email failed:", err)
     );
   };
 
-  // Handle Yes button click
   const handleYesClick = () => {
     setPopupMessage("Ahh finally right decision. So,here is my number - 6396174031.");
     setShowPopup(true);
     sendEmail("YES");
   };
 
-  // Handle No button click
   const handleNoClick = () => {
     const noMessages = [
       "Think again!",
@@ -134,18 +212,19 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
     }
   };
 
-  // Close popup
   const closePopup = () => {
     setShowPopup(false);
   };
 
   const renderCurrentPage = () => {
-    const showAnimations = page > 0 && page < 7; 
+    const showAnimations = page > 0 && page < 8; 
+    const showHearts = page >= 1 && page <= 7;
 
     return (
       <>
         {showAnimations && <BalloonAnimation />}
         {showAnimations && <ConfettiAnimation />}
+        {showHearts && <FloatingHearts />}
 
         {(() => {
           switch (page) {
@@ -234,6 +313,59 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
                 );
             case 4:
                 return (
+                    <div className="game-page animate-fade-in">
+                        <h2>Some messages or maybe some presents for you</h2>
+                        <p className="game-instruction">There are 20 envelopes as you're entering into your 20s. Click on the picture to see what you got.</p>
+                        
+                        {!showEnvelopes && openedEnvelopes.length === 0 && (
+                            <div className="envelope-starter">
+                                <div className="magic-box" onClick={handleEnvelopeIconClick}>
+                                    🎁
+                                </div>
+                                <p>Click the gift box to reveal your envelopes!</p>
+                            </div>
+                        )}
+
+                        {openedEnvelopes.length === 20 && (
+                            <div className="all-opened">
+                                <p className="completion-message">🎉 You've opened all your birthday surprises! 🎉</p>
+                                <div className="treasure-box" onClick={resetEnvelopes}>
+                                    📦
+                                </div>
+                                <p>Click on this icon to see your messages and presents again</p>
+                            </div>
+                        )}
+
+                        {showEnvelopes && openedEnvelopes.length < 20 && (
+                            <div className="envelopes-container">
+                                {envelopeContents.map((_, index) => {
+                                    if (openedEnvelopes.includes(index)) return null;
+                                    return (
+                                        <div 
+                                            key={index} 
+                                            className="envelope" 
+                                            onClick={() => handleEnvelopeClick(index)}
+                                            style={{
+                                                animationDelay: `${index * 0.1}s`,
+                                                left: `${(index % 5) * 18 + 10}%`,
+                                                top: `${Math.floor(index / 5) * 25 + 20}%`
+                                            }}
+                                        >
+                                            ✉️
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+
+                        <div className="mobile-nav-fixed">
+                            <button className="back-button" onClick={handleBack}>Back</button>
+                            <button className="next-button" onClick={() => setPage(5)}>Next</button>
+                        </div>
+                    </div>
+                );
+            case 5:
+                return (
                   <div className="creative-box animate-fade-in">
                     <h2>Our Picture "Together(Snap Bitmoji will Count too)"</h2>
                     <div className="together-pics-container">
@@ -247,11 +379,11 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
                       Well that ghibli is generated by GPT giving our image as prompt!!!'</p>
                     <div className="mobile-nav-fixed">
                       <button className="back-button" onClick={handleBack}>Back</button>
-                      <button className="next-button" onClick={() => setPage(5)}>Next</button>
+                      <button className="next-button" onClick={() => setPage(6)}>Next</button>
                     </div>
                   </div>
                 );
-            case 5:
+            case 6:
                 return (
                     <div className="creative-box animate-fade-in">
                         <h2>If you have reached till here...</h2>
@@ -373,17 +505,17 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
 </p>
                         <div className="mobile-nav-fixed">
                           <button className="back-button" onClick={handleBack}>Back</button>
-                          <button className="next-button" onClick={() => setPage(6)}>Next</button>
+                          <button className="next-button" onClick={() => setPage(7)}>Next</button>
                         </div>
                     </div>
                 );
-            case 6:
+            case 7:
               return (
                   <div className="centered-box animate-fade-in">
                       <h2>Once again, a very Happy Birthday❤️</h2>
                       
                       <div className="end-buttons">
-                          <button onClick={() => setPage(7)}>Finish</button>
+                          <button onClick={() => setPage(8)}>Finish</button>
                           <button onClick={() => setPage(0)}>Want to see your present again?</button>
                          
                       </div>
@@ -392,7 +524,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
                       </div>
                   </div>
               );
-            case 7:
+            case 8:
               return (
                 <div className="centered-box animate-fade-in">
                     <h2>Once Again Happy Birthday❤️</h2>
@@ -428,6 +560,21 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic }) => {
           <div className="popup-content" onClick={(e) => e.stopPropagation()}>
             <p>{popupMessage}</p>
             <button className="popup-close" onClick={closePopup}>Close</button>
+          </div>
+        </div>
+      )}
+      {selectedEnvelope && (
+        <div className="envelope-popup-overlay" onClick={closeEnvelopePopup}>
+          <div className="envelope-popup-content" onClick={(e) => e.stopPropagation()}>
+            {selectedEnvelope.type === 'present' ? (
+              <>
+                <img src={selectedEnvelope.image} alt="Present" className="present-image" />
+                <p>{selectedEnvelope.text}</p>
+              </>
+            ) : (
+              <p>{selectedEnvelope.content}</p>
+            )}
+            <button className="envelope-close" onClick={closeEnvelopePopup}>Close</button>
           </div>
         </div>
       )}
