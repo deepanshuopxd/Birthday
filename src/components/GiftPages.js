@@ -320,7 +320,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic, onCakeFinish }) => {
                   <FloatingHearts />
                  <div className="front">
                     <button className="back-button-1" onClick={handleBack}>Back</button>
-                    <button className="next-button-2" onClick={() => setPage(2)}>Next</button>
+                    <button className="next-button-2" onClick={() => setPage(0)}>Next</button>
                   </div>
                 </div>
               );
@@ -392,7 +392,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic, onCakeFinish }) => {
                   </div>
                   <div className="mobile-nav-fixed">
                     <button className="back-button" onClick={handleBack}>Back</button>
-                    <button className="next-button" onClick={() => setPage(5)}>Next</button>
+                    <button className="next-button" onClick={() => setPage(4)}>Next</button>
                   </div>
                 </div>
               );
@@ -662,7 +662,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic, onCakeFinish }) => {
                   <h2>Once again, a very Happy Birthday❤️</h2>
                   <div className="end-buttons">
                     <button onClick={() => setPage(10)}>Finish</button>
-                    <button onClick={() => setPage(-1)}>Want to see your present again?</button>
+                    <button onClick={() => setPage(0)}>Want to see your present again?</button>
                   </div>
                   <div className="mobile-nav-fixed">
                     <button className="back-button" onClick={handleBack}>Back</button>
