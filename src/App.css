@@ -3,6 +3,92 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Pacifico&display=swap');
 
+/* ---- NEW CAKE PAGE STYLES ---- */
+.cake-page-container {
+  width: 100%;
+  height: 200%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  box-sizing: border-box;
+  background: radial-gradient(circle, #fde4e7, #f4c4d1);
+  animation: fadeInScaleUp 1s ease-out forwards;
+}
+
+@keyframes fadeInScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.cake-page-title {
+  text-align: center;
+}
+
+.cake-page-title h2 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 4rem;
+  font-weight: normal;
+  color: #c2185b;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 0;
+}
+
+.cake-page-title p {
+  font-size: 1.1rem;
+  color: #e75480;
+  margin-top: 0.5rem;
+}
+
+.cake-and-stand {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cake-stand {
+  width: 340px;
+  height: 20px;
+  background: #d3a683;
+  border-radius: 4px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  top: -15px; /* Sits just under the cake */
+  z-index: 1;
+}
+.cake-stand::before {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 15px;
+  background: #c19672;
+  border-radius: 0 0 5px 5px;
+}
+
+.cake {
+  z-index: 2; /* Ensure cake is on top of the stand */
+}
+
+.cake-buttons {
+  margin-top: 20px;
+  height: 60px; /* Reserve space for buttons to prevent layout shift */
+}
+/* --- END OF NEW CAKE PAGE STYLES --- */
+
+
+/* Keep all your other existing CSS rules from here down */
 body {
   background: linear-gradient(to right, #fff1f2, #fce4ec);
   font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
@@ -61,6 +147,506 @@ h2 {
   font-size: 2em; 
   font-weight: 600; 
   z-index: 10; 
+}
+
+
+.cake-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+  overflow: hidden;
+}
+
+.cake-container {
+  text-align: center;
+  z-index: 10;
+  position: relative;
+  flex-shrink: 0; /* Prevents the cake from shrinking */
+}
+
+.cake {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  margin: 0 auto 30px;
+}
+
+.cake-layer {
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.cake-bottom {
+  width: 300px;
+  height: 80px;
+  background: linear-gradient(45deg, #8B4513, #D2691E);
+  bottom: 0;
+  left: 0;
+}
+
+.cake-top {
+  width: 250px;
+  height: 70px;
+  background: linear-gradient(45deg, #FFB6C1, #FFC0CB);
+  bottom: 60px;
+  left: 25px;
+}
+
+.cake-decoration {
+  position: absolute;
+  font-size: 60px;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: cakeGlow 2s ease-in-out infinite alternate;
+}
+
+.candles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.candle-container {
+  position: absolute;
+  top: -40px;
+}
+
+.candle {
+  width: 8px;
+  height: 40px;
+  background: linear-gradient(to bottom, #FFD700, #FFA500);
+  border-radius: 4px;
+  margin: 0 auto;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.flame {
+  width: 12px;
+  height: 15px;
+  background: radial-gradient(circle, #FF4500 30%, #FFD700 70%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: absolute;
+  top: -15px;
+  left: -2px;
+  animation: flameFlicker 0.5s ease-in-out infinite alternate;
+}
+
+.light-candles-btn, .blow-btn, .final-blow-btn {
+  background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  animation: buttonPulse 2s ease-in-out infinite;
+}
+
+.light-candles-btn:hover, .blow-btn:hover, .final-blow-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.blow-message, .try-again-message {
+  margin: 20px 0;
+  animation: messageSlideIn 0.5s ease-out;
+}
+
+.blow-message p, .try-again-message p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.countdown {
+  margin: 20px 0;
+  animation: countdownBounce 0.5s ease-out;
+}
+
+.countdown h2 {
+  font-size: 48px;
+  font-weight: bold;
+  color: #FF4500;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+  animation: countdownPulse 1s ease-in-out infinite;
+}
+
+.hbd-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 20;
+}
+
+.hbd-text {
+  font-size: 30px;
+  font-weight: bold;
+  justify-content: last baseline;
+  text-align: end;
+  background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rainbowText 3s ease-in-out infinite, hbdBounce 2s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(255,255,255,0.8);
+}
+
+.fireworks {
+  position: relative;
+  width: 100%;
+  height: 100px;
+}
+
+.firework {
+  position: absolute;
+  font-size: 30px;
+  animation: fireworkBurst 2s ease-out infinite;
+}
+
+.candles-blown p {
+  font-size: 28px;
+  font-weight: bold;
+  color: #4ECDC4;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  animation: wishMade 1s ease-out;
+}
+
+/* Sparkle Animation */
+.sparkle-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.sparkle {
+  position: absolute;
+  font-size: 20px;
+  animation: sparkleFloat 3s ease-in-out infinite;
+}
+
+/* Game Intro Page Styles */
+.game-intro-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.game-intro-content {
+  background: rgba(255,255,255,0.95);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  text-align: center;
+  max-width: 600px;
+  animation: gameIntroSlide 1s ease-out;
+}
+
+.puzzle-preview {
+  margin-bottom: 20px;
+}
+
+.puzzle-preview-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  animation: previewGlow 2s ease-in-out infinite alternate;
+}
+
+.start-game-btn {
+  background: linear-gradient(45deg, #4ECDC4, #44A08D);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  animation: gameButtonPulse 2s ease-in-out infinite;
+}
+
+.start-game-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+/* Puzzle Page Styles */
+.puzzle-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.puzzle-container {
+  margin: 30px 0;
+}
+
+.puzzle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 2px;
+  background: #333;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.puzzle-cell {
+  width: 100px;
+  height: 100px;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.puzzle-piece {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 3px;
+}
+
+.puzzle-piece:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+.puzzle-instruction {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  margin-bottom: 20px;
+}
+
+.puzzle-solved {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.puzzle-solved h3 {
+  color: white;
+  font-size: 28px;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  animation: solvedBounce 1s ease-out;
+}
+
+.reveal-present-btn {
+  background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  animation: presentButtonGlow 2s ease-in-out infinite;
+}
+
+.reveal-present-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+/* Puzzle Popup Styles */
+.puzzle-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: overlayFadeIn 0.3s ease-out;
+}
+
+.puzzle-popup-content {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  animation: puzzlePopupSlide 0.5s ease-out;
+}
+
+.puzzle-popup-content h3 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.puzzle-present {
+  margin: 20px 0;
+}
+
+.puzzle-present-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  margin-bottom: 15px;
+  animation: presentGlow 2s ease-in-out infinite alternate;
+}
+
+.puzzle-close {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 2px solid white;
+  padding: 10px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.puzzle-close:hover {
+  background: white;
+  color: #333;
+}
+
+/* Cake Page Animations */
+@keyframes cakeGlow {
+  0% { transform: translateX(-50%) scale(1); }
+  100% { transform: translateX(-50%) scale(1.1); filter: brightness(1.2); }
+}
+
+@keyframes flameFlicker {
+  0% { transform: rotate(-2deg) scale(1); }
+  100% { transform: rotate(2deg) scale(1.1); }
+}
+
+@keyframes buttonPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes messageSlideIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes countdownBounce {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes countdownPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes rainbowText {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes hbdBounce {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+}
+
+@keyframes fireworkBurst {
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.5) rotate(180deg); opacity: 0.8; }
+  100% { transform: scale(2) rotate(360deg); opacity: 0; }
+}
+
+@keyframes wishMade {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sparkleFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+  33% { transform: translateY(-20px) rotate(120deg); opacity: 1; }
+  66% { transform: translateY(10px) rotate(240deg); opacity: 0.8; }
+}
+
+/* Game Intro Animations */
+@keyframes gameIntroSlide {
+  0% { opacity: 0; transform: translateY(50px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes previewGlow {
+  0% { box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+  100% { box-shadow: 0 8px 20px rgba(78, 205, 196, 0.6); }
+}
+
+@keyframes gameButtonPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+  50% { transform: scale(1.05); box-shadow: 0 8px 25px rgba(78, 205, 196, 0.5); }
+}
+
+/* Puzzle Animations */
+@keyframes solvedBounce {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes presentButtonGlow {
+  0%, 100% { box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+  50% { box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6); }
+}
+
+@keyframes overlayFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes puzzlePopupSlide {
+  0% { opacity: 0; transform: scale(0.8) translateY(50px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes presentGlow {
+  0% { box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+  100% { box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6); }
 }
 
 .naam{
@@ -728,6 +1314,18 @@ button:hover {
 }
 
 .back-button { 
+  position: absolute; 
+  bottom: 20px; 
+  left: 20px; 
+  background-color: #f48fb1; 
+}
+.next-button-2 { 
+  position: absolute; 
+  bottom: 20px; 
+  right: 20px; 
+}
+
+.back-button-1 { 
   position: absolute; 
   bottom: 20px; 
   left: 20px; 

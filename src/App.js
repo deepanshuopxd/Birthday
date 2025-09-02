@@ -5,27 +5,22 @@ import NameEntry from './components/NameEntry';
 import AgeCounter from './components/AgeCounter';
 import GiftPages from './components/GiftPages';
 
-// Import songs
+// Make sure you have 6 DIFFERENT song files in your assets/music folder
 import song1 from './assets/music/song1.mp3';
 import song2 from './assets/music/song2.mp3';
-import song3 from './assets/music/song1.mp3';
-import song4 from './assets/music/song2.mp3';
-import song5 from './assets/music/song1.mp3';
-import song6 from './assets/music/song2.mp3';
+import song3 from './assets/music/song3.mp3';
+import song4 from './assets/music/song4.mp3';
+import song5 from './assets/music/song5.mp3';
+import song6 from './assets/music/song6.mp3';
 
 const playlist = [song1, song2, song3, song4 ,song5, song6];
 
 function App() {
-  const [step, setStep] = useState(() => {
-    const savedStep = localStorage.getItem('appStep');
-    return savedStep ? parseInt(savedStep, 10) : 1;
-  });
-  const [name, setName] = useState(() => {
-    const savedName = localStorage.getItem('userName');
-    return savedName || '';
-  });
+  // Always start at step 1 on page load/reload
+  const [step, setStep] = useState(1);
+  const [name, setName] = useState('');
 
-  // Save step and name to localStorage whenever they change
+  // Save step and name to localStorage for potential future use
   useEffect(() => {
     localStorage.setItem('appStep', step.toString());
   }, [step]);
@@ -41,26 +36,31 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
 
-  // This single useEffect now handles all music logic reliably.
   useEffect(() => {
     const audio = audioRef.current;
     if (step === 3 && audio) {
-      // If the audio source isn't the correct one, update it.
       if (!audio.src.includes(playlist[currentSongIndex])) {
         audio.src = playlist[currentSongIndex];
         audio.load();
       }
-      // Play the audio.
       audio.play().then(() => setIsPlaying(true)).catch(e => console.log("Audio play failed:", e));
     } else if (step < 3 && audio) {
-      // Pause the audio if we leave the gift pages.
       audio.pause();
       setIsPlaying(false);
     }
-  }, [step, currentSongIndex]); // This logic runs only when the step or song changes.
+  }, [step, currentSongIndex]);
 
   const playNextSong = () => {
     setCurrentSongIndex(prevIndex => (prevIndex + 1) % playlist.length);
+  };
+  
+  const startPlaylistFromBeginning = () => {
+    setCurrentSongIndex(0);
+    if (audioRef.current) {
+      audioRef.current.src = playlist[0];
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().then(() => setIsPlaying(true));
+    }
   };
 
   const handlePlayPause = () => {
@@ -73,15 +73,14 @@ function App() {
   };
   
   const pauseMusic = () => {
-    if (isPlaying) {
+    if (isPlaying && audioRef.current) {
       audioRef.current.pause();
       setIsPlaying(false);
     }
   };
 
   const resumeMusic = () => {
-    // Only resume playing if we are on the gift pages.
-    if (step === 3) {
+    if (step === 3 && audioRef.current) {
       audioRef.current.play().then(() => setIsPlaying(true));
     }
   };
@@ -98,7 +97,6 @@ function App() {
     if (step > 1) {
       const newStep = step - 1;
       setStep(newStep);
-      // Clear name when going back to step 1
       if (newStep === 1) {
         setName('');
         localStorage.removeItem('userName');
@@ -113,7 +111,12 @@ function App() {
       case 2:
         return <AgeCounter name={name} onComplete={handleAgeComplete} onBack={handleBack} />;
       case 3:
-        return <GiftPages onBack={handleBack} pauseMusic={pauseMusic} resumeMusic={resumeMusic} />;
+        return <GiftPages 
+                 onBack={handleBack} 
+                 pauseMusic={pauseMusic} 
+                 resumeMusic={resumeMusic} 
+                 onCakeFinish={startPlaylistFromBeginning}
+               />;
       default:
         return <NameEntry onNameSubmit={handleNameSubmit} />;
     }
@@ -122,12 +125,12 @@ function App() {
   return (
     <div className="App">
        {step === 3 && (
-        <div className="music-player">
-          <audio ref={audioRef} onEnded={playNextSong} />
-          <button onClick={handlePlayPause}>{isPlaying ? 'Pause' : 'Play'}</button>
-          <button onClick={playNextSong}>Next Song</button>
-        </div>
-      )}
+         <div className="music-player">
+           <audio ref={audioRef} onEnded={playNextSong} />
+           <button onClick={handlePlayPause}>{isPlaying ? 'Pause' : 'Play'}</button>
+           <button onClick={playNextSong}>Next Song</button>
+         </div>
+       )}
       
       <div className="container">
         {renderStep()}
