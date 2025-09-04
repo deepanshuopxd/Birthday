@@ -34,17 +34,17 @@ const envelopeContents = [
   { type: 'message', content: 'You have this incredible ability to make others feel special. That\'s your superpower!' },
   { type: 'present', image: img16, text: 'A virtual bouquet of your favorite (maybe) flowers!' },
   { type: 'message', content: 'May your dreams take flight and your heart always stay young and hopeful ❤️.' },
-  { type: 'message', content: 'सॉरी.. गलती मेरो हो, बस एक वार माफ करि दे। तुमार बिना मेरो दिन अधूरो लागछ।🥺' },
+  { type: 'message', content: 'तुम्हारी सुरमियाली आँख्यों मा, हाँ लोग मरणी।👀😍' },
   { type: 'message', content: 'जन्मदिन को बहुत–बहुत बधाइ छ! भगवान तुमार जीवन खुशीयाँ स भरि दै।❤️' },
   { type: 'message', content: 'You deserve all the love and happiness this world has to offer ❤️‍🔥.' },
   { type: 'message', content: 'Thank you for all the memories we created together. They mean the world to me 💟.' },
-  { type: 'message', content: 'तुमार जीवन फूल स बगिया जैं रंगीन रहै। जन्मदिन की बधाइ!❤️' },
+  { type: 'message', content: 'तुमार जीवन फूलँकी बगिया जैं रंगीन रहै। जन्मदिन की बधाइ!❤️' },
   { type: 'message', content: 'Your strength and resilience inspire everyone around you. Keep shining 💕!' },
   { type: 'message', content: 'I hope your 20s are filled with adventures, love, and endless possibilities.' },
-  { type: 'message', content: 'आज तुमार स्पेशल डे छ, खूब मस्ती कर आ धमाल कर! बर्थडे मुबारक हो।💕' },
+  { type: 'message', content: 'आज तुमार खास दिन छ, खूब मस्ती कर आ धमाल कर! जन्मदिन मुबारक हो।💕' },
   { type: 'message', content: 'May every step you take lead you closer to your dreams and happiness ❤️.' },
   { type: 'message', content: 'Happy 20th Birthday! May this milestone year be your most wonderful one yet 💟!' },
-  { type: 'message', content: 'अगर मेरो कारन तुमार दुख भई गेल, त मैं दिल स माफी मँगूछु। तू मेरो सच्ची साथी छ, आ मैं तुमारो खोवाली नि चाहू।🥺' },
+  { type: 'message', content: 'जदि मेरो कारण तुमार दुःख भई गयो, त मैं दिल स माफी मँगुछु। तू मेरो सच्ची साथी छ, आ मैं तिलै खोवाली नि चाहूँछु।' },
   { type: 'message', content: 'Here\'s to new beginnings, fresh starts, and the beautiful journey ahead 💖!' },
   { type: 'message', content: 'Not a message but more like a wish for me:- ✨ "Maybe the old friendship once we had can find its way back again — not bound by the past, but renewed with laughter, trust, and the comfort we once shared. If life ever gives us another chance, I hope we can cherish it with more understanding, kindness, and joy than before. Wishing for a friendship that feels even stronger, softer, and brighter than it ever was." ✨!' }
 ];
@@ -319,8 +319,8 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic, onCakeFinish }) => {
                   <SparkleAnimation />
                   <FloatingHearts />
                  <div className="front">
-                    <button className="back-button-1" onClick={handleBack}>Back</button>
-                    <button className="next-button-2" onClick={() => setPage(0)}>Next</button>
+                    {/* <button className="back-button-1" onClick={handleBack}>Back</button> */}
+                    {/* <button className="next-button-2" onClick={() => setPage(0)}>Next</button> */}
                   </div>
                 </div>
               );
@@ -331,7 +331,7 @@ const GiftPages = ({ onBack, pauseMusic, resumeMusic, onCakeFinish }) => {
                   <h2>Here is your birthday gift💕...</h2>
                   <button onClick={() => setPage(1)}>Click to see your present</button>
                   <div className="mobile-nav-fixed">
-                    <button className="back-button" onClick={handleBack}>Back</button>
+                    {/* <button className="back-button" onClick={handleBack}>Back</button> */}
                   </div>
                 </div>
               );
